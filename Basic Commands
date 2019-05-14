@@ -1,0 +1,39 @@
+#Mongo Tutorial / Roger Osalde / 13-05-2019 / Hunucmá Yucatán
+
+#BASIC COMMANDS
+
+##Create a variable
+> [Name] = {"[Attrivute_1]": "[Caracteristics]", "[Attrivute_2]": "[Caracteristics]"}
+
+
+##To see the content of the variable
+> VariableName
+
+
+##This command shows us the NoSql databases that we have in mongodb
+> show dbs
+
+
+##To start working with a particular database
+> use databaseName
+
+
+##Drops the current database you're in
+>db.dropDatabase()
+
+
+##The following command can be used to create a collection
+> db.createCollection("collectionName").insert
+
+
+##This command shows us the collections available in the database
+>  show collections
+
+
+##In case we want to delete the created collection
+> db.collection_name.drop()
+
+
+##The Find command shows us the list of documents ("records") of a collection
+> db.[coleccion].find()
+
