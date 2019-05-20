@@ -37,3 +37,91 @@
 ##The Find command shows us the list of documents ("records") of a collection
 > db.[coleccion].find()
 
+
+###############################################################################################
+###############################################################################################
+######################### Q U E S T I O N S         S E C T I O N S ###########################
+
+##Delete documents in MongoDB without deleting the folder
+###R: You can use,and it will delete just the documents with out the folder
+> db.coleccion.deleteMany({})
+
+##How to get the last inserted record?
+###R: using the natural and specific order that comes from the most recent
+###to the oldest and limiting the appearance to only one result.
+> db.micoleccion.find().sort({$natural:-1}).limit(1)
+
+##SQL or NoSQL?
+###R: 
+
+##MongoDB arrays searches(looking for book authors)
+###R: This sentece will give you an array with the exact numbers of the author that had the expecific 
+###guidelines that you ask for.
+> db.collections.books.find({
+  author: {
+    $all: [ 'author1', 'author2']+
+    $size: 2
+  }
+});
+
+##Check MongoDB
+###R: When you perform a search in a collection and wish to exclude one or several fields 
+###you can use 0 to indicate not to show the field:
+> db.colleccion.find({}, {"name of the field not requiered": 0 })
+###to include it we use 1
+> db.colleccion.find({}, {"nombre campo no requerido": 1 })
+###If you want to obtain only the value (or the values of a certain field) you get it in this way:
+> db.terminales.find().forEach(function(row) {print(row.field)})
+
+##Filter data of a collection by date
+###R: Assuming that you do not have the date field in the Collection, with the ObjectId you 
+###can have the date that the application was registered you can see it in the following way:
+> ObjectId.getTimestamp()
+###the next thing is to look for the records of the last hour (one hour of difference with 
+###respect to the current one); you must calculate the last hour and compare it with the ObjectId () timestamp
+###we must use the $ where function to calculate the date
+> db.OPERATIONS.find({ 
+    $where: 
+    function() { 
+        var ultimaHora = new Date();
+        ultimaHora.setHours(ultimaHora.getHours() - 1);
+        return this.Description ==  "Not playable" &&   this._id.getTimestamp() >= ultimaHora 
+        } 
+    }).count()
+    
+ ##How to compare two collections in MongoDB?
+ ###R: this works manages to compare both collections and obtain the difference between them,
+ ###comparing objects with the same attributes
+ > function filter(obj1, obj2) {
+    var result = {};
+    for(key in obj1) {
+        if(obj2[key] != obj1[key]) result[key] = obj2[key];
+        if(typeof obj2[key] == 'array' && typeof obj1[key] == 'array') 
+            result[key] = arguments.callee(obj1[key], obj2[key]);
+        if(typeof obj2[key] == 'object' && typeof obj1[key] == 'object') 
+            result[key] = arguments.callee(obj1[key], obj2[key]);
+    }
+    return result;
+}
+
+##What is MongoDB?
+###R: MongoDB is a document-oriented database. This means that instead of saving the data 
+###in registers, it saves the data in documents.
+
+##Where can MongoDB be used?
+###R: Although it is often said that NoSQL databases have a narrow scope of application, 
+###MongoDB can be used in many of the projects we develop today.
+###Any application that needs to store semi-structured data can use MongoDB.
+
+##What´s the limit size of a document in MongoDB?
+###R: 16MB for each document
+
+##MongoDB VS MySQL
+###R: It depends on the problem you face, if you have a database with a structure already defined,
+###then MySQL is for you, if your database does not have an apparent order then MongoDb is what you need.
+###The difference is that currently most data banks are presented without any specific order so 
+###MongoDb is having more presence.
+
+##What are the advantages of MongoDB?
+###R: Data modeling,Scalability,Flexibility,High availability and It's open source.
+
