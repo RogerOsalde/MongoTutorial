@@ -37,6 +37,45 @@
 ##The Find command shows us the list of documents ("records") of a collection
 > db.[coleccion].find()
 
+##Using Accumulators
+##Accumulators take a single expression and compute
+## the expression for grouped documents.
+> db.potions.aggregate([
+{"$group": {"_id": "group_key","total": {"$sum": 1}}}
+
+
+##When values begin with a “$”, they represent
+##field paths that point to the value, also
+##When fields begin with a “$”, they are
+##operators that perform a task("$sum": represent the accumulator")
+>db.potion.aggregate([
+{"$group": {"_id": "$vendor_id","total": {"$sum": 1}}}
+])
+
+###Class22052019
+##If you want to know the total number of coincidences for a variable and count other variable 
+##at the same time this command is for you.
+> db.potions.aggregate([{
+"$group": {"id":"$vendor_id",
+"total": {"$sum": 1},
+"grade_total": {"$sum": "grade"}
+}
+}
+])
+
+##Using $max and $min together
+##These functions present the max cuantitive of any variable if this is a number,
+##and the other present the min cuantitive of any variable.
+> db.potions.aggregate([
+{"group": {
+"_id": "$vendor_id",
+"max_grade": {"$max": "grade"},
+"min_grade": {"$min": "grade"}
+}
+}
+])
+
+
 
 ###############################################################################################
 ###############################################################################################
